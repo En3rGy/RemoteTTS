@@ -90,6 +90,15 @@ void RemoteTTS::slot_msgReceived(QByteArray p_grMsg)
 
     m_pConfigForm->logEvent( tr( "Received message: " ) + sMsg );
 
+    if ( ( m_sSayList.isEmpty() ) && ( m_sClipList.isEmpty() ) ) {
+        QString sIntroFile = m_pConfigForm->getValue( g_sConfig_intoFile ).toString();
+
+         m_pConfigForm->logEvent( tr( "Intro file prepended " ) );
+
+        if ( ! sIntroFile.isEmpty() )
+            m_sClipList.prepend( sIntroFile );
+    }
+
     try {
         if ( sMsg.startsWith( IncommingMsgKeys::m_sKey_Play, Qt::CaseInsensitive ) == true ) {
             sRequest.remove(0, 4 );
@@ -98,13 +107,6 @@ void RemoteTTS::slot_msgReceived(QByteArray p_grMsg)
         else if ( sMsg.startsWith( IncommingMsgKeys::m_sKey_Say, Qt::CaseInsensitive ) == true ) {
             sRequest.remove(0, 3 );
             m_sSayList.append( sRequest );
-        }
-
-        if ( m_sSayList.size() + m_sClipList.size() == 1 ) {
-            QString sIntroFile = m_pConfigForm->getValue( g_sConfig_intoFile ).toString();
-
-            if ( ! sIntroFile.isEmpty() )
-                m_sClipList.prepend( sIntroFile );
         }
 
         if ( m_grSepTimer.isActive() == false ) {
@@ -131,6 +133,7 @@ void RemoteTTS::slot_processAudio()
         }
 
         qDebug() << "m_sPlayList.isEmpty() == false" << Q_FUNC_INFO;
+
         if ( m_pSound == nullptr ) {
             m_pSound = new QSound( m_sClipList.first() );
         }
@@ -211,6 +214,10 @@ bool RemoteTTS::audioDeviceReady()
     if ( m_pSound ) {
         if ( ! m_pSound->isFinished() ) {
             return false;
+        }
+        else {
+            delete m_pSound;
+            m_pSound = nullptr;
         }
     }
     if ( m_grTTS.state() == QTextToSpeech::Speaking ) {

@@ -36,7 +36,6 @@ bool CSystemStatus::winEventFilter(MSG *p_pMsg, long *p_pResult)
             qDebug() << "Received RESUME Event" << Q_FUNC_INFO ;
 
             m_bResumeDetected = true;
-            emit signal_systemResume();
             QTimer::singleShot( 2000, this, SLOT( slot_timeout()) );
         }
         else if( p_pMsg->wParam == PBT_APMSUSPEND )
@@ -54,6 +53,7 @@ bool CSystemStatus::winEventFilter(MSG *p_pMsg, long *p_pResult)
 void CSystemStatus::slot_timeout()
 {
     m_bResumeDetected = false;
+    emit signal_systemResume();
 }
 
 
