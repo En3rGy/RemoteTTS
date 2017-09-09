@@ -31,6 +31,7 @@ RemoteTTS::RemoteTTS(QWidget *parent) :
     m_grTpcMgr.listen( m_pConfigForm->getValue( g_sConfig_ttsInPort ).toInt() );
 
     connect( m_pConfigForm, SIGNAL(signal_saySample()), this, SLOT( slot_saySample()) );
+    connect( m_pConfigForm, SIGNAL( signal_playIntro() ), this, SLOT( slot_playIntro() )  );
     connect( m_pConfigForm, SIGNAL( signal_quitApp()), this, SLOT( slot_quitApp() ) );
     connect( & m_grTpcMgr, SIGNAL( signal_receivedMessage( QByteArray )), this, SLOT( slot_msgReceived(QByteArray)));
 
@@ -81,6 +82,19 @@ void RemoteTTS::slot_saySample()
     slot_processAudio();
 }
 
+void RemoteTTS::slot_playIntro() {
+    QString sIntroFile = m_pConfigForm->getValue( g_sConfig_intoFile ).toString();
+
+    if ( ! sIntroFile.isEmpty() ) {
+        m_pConfigForm->logEvent( tr( "Playing intro file: " ) + sIntroFile );
+        m_sClipList.prepend( sIntroFile );
+    }
+
+    if ( m_grSepTimer.isActive() == false ) {
+        slot_separationTimeOut();
+    }
+}
+
 void RemoteTTS::slot_msgReceived(QByteArray p_grMsg)
 {
     QString sMsg = QString::fromLatin1( p_grMsg );
@@ -120,8 +134,6 @@ void RemoteTTS::slot_msgReceived(QByteArray p_grMsg)
 
 void RemoteTTS::slot_processAudio()
 {
-    qDebug() << Q_FUNC_INFO;
-
     int nAudioDelay_ms = m_pConfigForm->getValue( g_sConfig_sepTimer_ms ).toInt();
 
     // Process play of recorded sound files
@@ -135,10 +147,12 @@ void RemoteTTS::slot_processAudio()
         qDebug() << "m_sPlayList.isEmpty() == false" << Q_FUNC_INFO;
 
         if ( m_pSound == nullptr ) {
-            m_pSound = new QSound( m_sClipList.first() );
+            QString sFile = QString("") + m_sClipList.first();
+            qDebug() << "Playing" << sFile << Q_FUNC_INFO;
+
+            m_pSound = new QSound( sFile );
         }
         m_pSound->play();
-        qDebug() << "Playing sound" << m_sClipList.first() << Q_FUNC_INFO;
         m_sClipList.removeFirst();
 
         qDebug() << "Finished starting playing, restarting timer" << Q_FUNC_INFO;

@@ -15,6 +15,7 @@ ConfigForm::ConfigForm(QWidget *parent) :
     connect( ui->toolButton_introSound, SIGNAL( released() ), this, SLOT( slot_selectIntroFile()) );
     connect( ui->pushButton_quit, SIGNAL( released()), this, SIGNAL( signal_quitApp()) );
     connect( ui->toolButton_playSample, SIGNAL( released()), this, SIGNAL( signal_saySample()) );
+    connect( ui->toolButton_playIntro, SIGNAL( released()), this, SIGNAL( signal_playIntro()) );
 }
 
 ConfigForm::~ConfigForm()

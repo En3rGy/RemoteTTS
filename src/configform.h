@@ -35,6 +35,7 @@ public:
 
 signals:
     void signal_saySample( void );
+    void signal_playIntro( void );
     void signal_quitApp( void );
 
 public slots:

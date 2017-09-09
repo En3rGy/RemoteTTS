@@ -36,6 +36,7 @@ public slots:
     void slot_suspend( void );
     void slot_separationTimeOut( void );
     void slot_saySample( void );
+    void slot_playIntro( void );
     void slot_processAudio( void );
     void slot_quitApp( void );
 
