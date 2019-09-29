@@ -8,9 +8,9 @@
 #include <QTime>
 
 RemoteTTS::RemoteTTS(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::RemoteTTS),
-    m_pSound( nullptr )
+    QMainWindow(parent)
+    , m_pSound( nullptr )
+    , ui(new Ui::RemoteTTS)
 {
     ui->setupUi(this);
 

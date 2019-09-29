@@ -66,6 +66,7 @@ CNativeEventFilter::CNativeEventFilter(CSystemStatus *p_pSystemStatus)
 
 bool CNativeEventFilter::nativeEventFilter(const QByteArray & p_grEventType, void * p_pMessage, long * p_nResult)
 {
+    Q_UNUSED( p_nResult )
 
     //   On Windows, eventType is set to "windows_generic_MSG" for messages sent
     //   to toplevel windows, and "windows_dispatcher_MSG" for system-wide
@@ -76,11 +77,10 @@ bool CNativeEventFilter::nativeEventFilter(const QByteArray & p_grEventType, voi
     if ( p_grEventType == "windows_generic_MSG")
     {
         MSG     * pMsg = static_cast< MSG *>    ( p_pMessage );
-        LRESULT * pRes = static_cast< LRESULT *>( p_nResult );
+        //LRESULT * pRes = static_cast< LRESULT *>( p_nResult );
 
-        Q_UNUSED( pRes )
-
-        m_pSystemStatus->winEventFilter( pMsg, pRes );
+        m_pSystemStatus->winEventFilter( pMsg, nullptr );
+        //m_pSystemStatus->winEventFilter( pMsg, pRes );
     }
     return false;
 }
