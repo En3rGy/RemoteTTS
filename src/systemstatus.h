@@ -39,7 +39,7 @@ class CNativeEventFilter : public QAbstractNativeEventFilter
 {
 public:
     CNativeEventFilter( CSystemStatus * p_pSystemStatus );
-    virtual bool nativeEventFilter(const QByteArray &p_grEventType, void *p_pMessage, long *p_nResult);
+    virtual bool nativeEventFilter(const QByteArray &p_grEventType, void *p_pMessage, qintptr *p_nResult);
 
 private:
     CSystemStatus * m_pSystemStatus;

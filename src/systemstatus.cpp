@@ -64,7 +64,7 @@ CNativeEventFilter::CNativeEventFilter(CSystemStatus *p_pSystemStatus)
 
 }
 
-bool CNativeEventFilter::nativeEventFilter(const QByteArray & p_grEventType, void * p_pMessage, long * p_nResult)
+bool CNativeEventFilter::nativeEventFilter(const QByteArray & p_grEventType, void * p_pMessage, qintptr * p_nResult)
 {
     Q_UNUSED( p_nResult )
 

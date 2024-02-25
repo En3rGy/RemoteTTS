@@ -120,6 +120,17 @@ void RemoteTTS::slot_msgReceived(QByteArray p_grMsg)
         }
         else if ( sMsg.startsWith( IncommingMsgKeys::m_sKey_Say, Qt::CaseInsensitive ) == true ) {
             sRequest.remove(0, 3 );
+            /// @todo do xml decoding, e.g. &#228; --> ä
+            sRequest = sRequest.replace( "&#228;", "ä" );
+            sRequest = sRequest.replace( "&#176;", "°" );
+            sRequest = sRequest.replace( "&#178;", "²" );
+            sRequest = sRequest.replace( "&#179;", "³" );
+            sRequest = sRequest.replace( "&#246;", "ö" );
+            sRequest = sRequest.replace( "&#252;", "ü" );
+            sRequest = sRequest.replace( "&#196;", "Ä" );
+            sRequest = sRequest.replace( "&#214;", "Ö" );
+            sRequest = sRequest.replace( "&#220;", "Ü" );
+            sRequest = sRequest.replace( "&#223;", "ß" );
             m_sSayList.append( sRequest );
         }
 
@@ -150,7 +161,8 @@ void RemoteTTS::slot_processAudio()
             QString sFile = QString("") + m_sClipList.first();
             qDebug() << "Playing" << sFile << Q_FUNC_INFO;
 
-            m_pSound = new QSound( sFile );
+            m_pSound = new QSoundEffect();
+            m_pSound->setSource(QUrl::fromLocalFile(sFile));
         }
         m_pSound->play();
         m_sClipList.removeFirst();
@@ -225,8 +237,8 @@ void RemoteTTS::slot_quitApp()
 
 bool RemoteTTS::audioDeviceReady()
 {
-    if ( m_pSound ) {
-        if ( ! m_pSound->isFinished() ) {
+    if (m_pSound) {
+        if (m_pSound->isPlaying()) {
             return false;
         }
         else {
@@ -234,7 +246,7 @@ bool RemoteTTS::audioDeviceReady()
             m_pSound = nullptr;
         }
     }
-    if ( m_grTTS.state() == QTextToSpeech::Speaking ) {
+    if (m_grTTS.state() == QTextToSpeech::Speaking) {
         return false;
     }
 

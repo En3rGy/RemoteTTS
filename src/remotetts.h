@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include <QTimer>
-#include <QSound>
+#include <QSoundEffect>
 #include <QTextToSpeech>
 #include "udpmanager.h"
 #include "tcpmanager.h"
@@ -43,7 +43,7 @@ public slots:
 private:
     bool audioDeviceReady( void );
 
-    QSound        * m_pSound;
+    QSoundEffect  * m_pSound;
     QTimer          m_grSepTimer;
     QTextToSpeech   m_grTTS;
 

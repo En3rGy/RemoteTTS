@@ -4,7 +4,7 @@
 int main(int argc, char *argv[])
 {
     QApplication::setApplicationName( "RemoteTTS");
-    QApplication::setApplicationVersion( "0.1.4.1");
+    QApplication::setApplicationVersion( "0.1.6.0");
     QApplication::setOrganizationName( "paul-family");
     QApplication::setOrganizationDomain( "www.paul-family.de" );
     QApplication::setApplicationDisplayName( QApplication::applicationName() + " v" + QApplication::applicationVersion() );

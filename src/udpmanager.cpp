@@ -45,8 +45,8 @@ void CUdpManager::solt_readPendingDatagrams()
 void CUdpManager::sendData( const QString & p_sData, const QString & p_sHostAdress, const quint16 p_unPort )
 {
     QByteArray   grByteArry;
-    grByteArry.append( p_sData );
-    QHostAddress grHostAdress( p_sHostAdress );
+    grByteArry.append(p_sData.toLatin1());
+    QHostAddress grHostAdress(p_sHostAdress);
     QUdpSocket grUdpSocket;
 
     grUdpSocket.writeDatagram( grByteArry, grHostAdress, p_unPort );
