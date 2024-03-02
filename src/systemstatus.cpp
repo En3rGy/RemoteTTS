@@ -1,5 +1,4 @@
 #include "systemstatus.h"
-#include <iostream>
 #include <QTimer>
 #include <QDebug>
 
