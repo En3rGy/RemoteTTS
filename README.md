@@ -1,6 +1,6 @@
 # RemoteTTS
 The software realises a text-to-speech application using the operating systems TTS features. The text is provided via a TCP/UDP interface.<br>
-In addition, the software reports is state depending on the hosts power state, e.g. "bye-bye" when the host is goind to suspend or "alive" after it resumed to indicate the availability of the service. Therefore, `<ServerRunning>1</ServerRunning>` resp. `<ServerRunning>0</ServerRunning>` is send hwile 1 represents service alive and 0 indicates a shutdon / bye-bye of the service.
+In addition, the software reports is state depending on the hosts power state, e.g. "bye-bye" when the host is goind to suspend or "alive" after it resumed to indicate the availability of the service. Therefore, `<ServerRunning>1</ServerRunning>` resp. `<ServerRunning>0</ServerRunning>` is send while 1 represents *service aliv*e and 0 indicates a *shutdown / bye-bye* of the service.
 
 Using MS Windows, the program can detect resume and suspend events on its own an reports the status. This feature is not implemented for linux os.<br> 
 Following a [StackOverFlow thread](https://stackoverflow.com/questions/23901419/how-to-capture-suspend-event-in-qt-linux) On linux you can put the following shell script in /etc/pm/sleep.d which executes a program with arguments. You can start a program and notify your main application in some way :
