@@ -9,12 +9,12 @@ Following a [StackOverFlow thread](https://stackoverflow.com/questions/23901419/
 case $1 in
 suspend)
     #suspending to RAM
-    /Path/to/Program/executable Sleeping
+    /Path/to/Program/remotetts --byebye
     ;;
 resume)
     #resume from suspend
     sleep 3
-    /Path/to/Program/executable Woken
+    /Path/to/Program/remotetts --alive
     ;;
 esac
 ```
